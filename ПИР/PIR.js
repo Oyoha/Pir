@@ -36,7 +36,7 @@ const g =simpleCurry(f)
 
 
 /////////////////////////
-//Utility code
+//UtilityCode
 
 const _ = Symbol("_");
 
@@ -83,7 +83,7 @@ curry._ = _
 
 
 ////////////////////////
-//Client code
+//ClientCode
 const h = curry(f)
  
 
