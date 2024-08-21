@@ -67,6 +67,66 @@ const getLazy = (obj) => {
         }
     )
 }
+
+// const getLazy = (obj) => {
+//     const iterator = typeof obj.next === "function"
+//         ? obj 
+//         : obj[Symbol.iterator]()
+
+//     function* lazyGenerator() {
+//         let index = 0
+//         let result
+
+//         while (!(result = iterator.next()).done) {
+//             yield result.value
+//         }
+//     }
+
+//     return new Proxy(
+//         obj,
+//         {
+//             get(_, prop) {
+//                 switch (prop){
+//                     case "map":
+//                         return predicate => {
+//                             return getLazy((function* () {
+//                                 for (const value of lazyGenerator()) {
+//                                     yield predicate(value, index++)
+//                                 }
+//                             })())
+//                         }
+//                     case "filter":
+//                         return predicate => {
+//                             return getLazy((function* () {
+//                                 for (const value of lazyGenerator()) {
+//                                     if (predicate(value)) {
+//                                         yield value
+//                                     }
+//                                 }
+//                             })())
+//                         }
+//                     case "take":
+//                         return (count) => {
+//                             return getLazy((function* () {
+//                                 let taken = 0
+//                                 for (const value of lazyGenerator()) {
+//                                     if (taken < count) {
+//                                         yield value
+//                                         taken++
+//                                     } else {
+//                                         break
+//                                     }
+//                                 }
+//                             })())
+//                         }
+//                     default:
+//                         return Reflect.get(...arguments)
+//                 }
+//             }
+//         }
+//     )
+// }
+
 console.log(
     ...getLazy(list)
         .map(x => console.log("map 1") || x + 10)
