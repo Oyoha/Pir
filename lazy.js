@@ -8,8 +8,8 @@ const list = [1,2,3,4,5]
 
 const getLazy = (obj) => {
     const iterator = typeof obj.next === "function"
-    ? obj 
-    : obj[Symbol.iterator]()
+        ? obj 
+        : obj[Symbol.iterator]()
 
     return new Proxy(
         obj,
@@ -30,7 +30,24 @@ const getLazy = (obj) => {
                                     }
                                 }
                             })
-                        }                        
+                        }
+                        break
+                    case "filter":
+                        return predicate => {
+                            return getLazy({
+                                [Symbol.iterator]() { return this },
+                                next() {
+                                    let result
+                                    do {
+                                        result = iterator.next()
+                                        if (result.done) {
+                                            return result
+                                        }
+                                    } while (!predicate(result.value))
+                                    return result
+                                }
+                            })
+                        }
                         break
                     case "take":
                         return (count) => {
@@ -51,16 +68,17 @@ const getLazy = (obj) => {
     )
 }
 console.log(
-...getLazy(list)
-.map(x => console.log("map 1") || x + 10)
-.map(x => console.log("map 2") || x + 1)
-.map((x, i) => {
-    if(i == 3){
-        throw "Oops"
-    } else return x
-})
-.take(3)
-.map(x => console.log("map 3") || x ** 2)
+    ...getLazy(list)
+        .map(x => console.log("map 1") || x + 10)
+        .map(x => console.log("map 2") || x + 1)
+        .filter(x => x % 2 === 0)
+        .map((x, i) => {
+            if(i == 3){
+                throw "Oops"
+            } else return x
+        })
+        .take(3)
+        .map(x => console.log("map 3") || x ** 2)
 )
 
 const endlessIterator = {
@@ -70,4 +88,4 @@ const endlessIterator = {
     }
 }
 
-console.log(...getLazy(endlessIterator).map(x => x ** 2).take(10))
+console.log(...getLazy(endlessIterator).filter(x => x % 2 === 0).map(x => x ** 2).take(10))
