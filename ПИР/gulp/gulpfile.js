@@ -1,6 +1,8 @@
 const gulp = require("gulp")
 const browserSync = require("browser-sync")
 const babel = require("gulp-babel")
+const webpack = require("webpack-stream")
+const webpackConfig = require("./webpack.confing")
 
 function build() {
     return gulp
