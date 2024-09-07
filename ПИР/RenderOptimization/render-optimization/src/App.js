@@ -91,7 +91,7 @@ const Input = React.memo(({onChange})=> {
   )
 })
 
-const App = () => {
+const OldApp = () => {
   const {firstValue, setFirstValue} = React.useState()
   const {secondValue, setSecondValue} = React.useState()
 
@@ -165,4 +165,32 @@ class B  extends React.Component {
 //   return <p>{count}</p>
 // }
 
+const {Consumer, Provider} = React.createContext()
+
+const App = () => {
+  const {count, setCount} = React.useState()
+  const appCount = () => setCount(count + 1)
+
+  return(
+  <Provider value={{count: count, appCount: appCount}}>
+    <div style={{textAlign:"center", marginTop: 50}}>
+      <div style={{maxWidth: 500, margin: "0 auto"}}>
+        Хаюшки
+      </div>
+      <div>
+        <Button/>
+      </div>
+    </div>
+  </Provider>
+  )
+}
+
+const Button = () => {
+  return(
+    <div>
+        asd
+    </div>
+  )
+}
+export {Consumer as MyConsumer}
 export default App;
