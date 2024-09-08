@@ -6,20 +6,20 @@ describe('BlenderStore', () => {
   });
 
   it('должен добавлять элементы к выбранным элементам(selectedElements)', () => {
-    blenderStore.addElement('Red');
-    blenderStore.addElement('Cat');
-    expect(blenderStore.selectedElements).toEqual(['Red', 'Cat']);
+    blenderStore.addElement('Красный');
+    blenderStore.addElement('Кошка');
+    expect(blenderStore.selectedElements).toEqual(['Красный', 'Кошка']);
   });
 
   it('должен обнулять выбранные элементы', () => {
-    blenderStore.addElement('Red');
+    blenderStore.addElement('Красный');
     blenderStore.resetElements();
     expect(blenderStore.selectedElements).toEqual([]);
   });
 
   it('должен комбинировать элементы корректно', () => {
-    blenderStore.addElement('Red');
-    blenderStore.addElement('Cat');
-    expect(blenderStore.combinedElements).toBe('Red + Cat');
+    blenderStore.addElement('Красный');
+    blenderStore.addElement('Кошка');
+    expect(blenderStore.combinedElements).toBe('Красный + Кошка');
   });
 });

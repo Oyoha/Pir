@@ -1,3 +1,4 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { blenderStore } from '../store/blenderStore';
 
@@ -10,7 +11,7 @@ const ResultViewer = () => {
       ) : (
         <p>Нет выбранных элементов</p>
       )}
-      <button onClick={() => blenderStore.resetElements()}>Reset</button>
+      <button onClick={() => blenderStore.resetElements()}>Очистить</button>
     </div>
   );
 };
